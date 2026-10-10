@@ -1,264 +1,162 @@
-'use client'
+
+"use client"
+
+import { useEffect, useState } from "react"
+import Link from "next/link"
 
 export default function Home() {
+  const [memorials, setMemorials] = useState([])
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(() => {
+    try {
+      const storedMemorials = JSON.parse(
+        localStorage.getItem("petsiveMemorials") || "{}"
+      )
+
+      const memorialList = Object.values(storedMemorials)
+        .filter((memorial) => memorial && memorial.slug && memorial.petName)
+
+      setMemorials(memorialList)
+    } catch {
+      setMemorials([])
+    } finally {
+      setIsLoaded(true)
+    }
+  }, [])
+
   return (
-    <main className="min-h-screen bg-[#f7f4ef] text-[#242321]">
+    <main className="min-h-screen bg-[#fbf8f3] text-[#242321]">
 
-      {/* Mobile community feed header */}
+      {/* Introduction */}
+      <section className="mx-auto max-w-6xl px-5 pb-12 pt-12 sm:px-8 sm:pb-16 sm:pt-20">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-xs font-medium uppercase tracking-[0.25em] text-[#8a8176]">
+            A place to remember them
+          </p>
 
+          <h1 className="mt-5 font-serif text-4xl font-medium leading-tight tracking-tight sm:text-6xl">
+            Every beloved life leaves a story.
+          </h1>
 
-      {/* Compact mobile sticky header */}
-      <section className="sticky top-0 z-40 bg-[#FBF8F3] px-5 py-3 md:hidden">
-        <a
-          href="/"
-          className="font-serif text-3xl font-semibold tracking-tight text-[#242321]"
-        >
-          Petsive
-        </a>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[#716b63] sm:text-lg sm:leading-8">
+            A quiet place to honor the pets we love, preserve
+            their stories, and keep their memories close.
+          </p>
+
+          <Link
+            href="/create"
+            className="mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-[#292722] px-7 py-3 text-sm font-medium text-white transition hover:bg-[#454139]"
+          >
+            Create a memorial
+          </Link>
+        </div>
       </section>
 
-      {/* Hero */}
-      <section className="mx-auto max-w-7xl px-6 py-16 md:py-24">
-        <div className="grid items-center gap-12 md:grid-cols-2">
-          <div>
-            <p className="mb-5 text-sm uppercase tracking-[0.25em] text-[#77736d]">
-              A place to remember them
-            </p>
+      {/* Memorial feed */}
+      <section className="mx-auto max-w-6xl px-5 pb-20 sm:px-8 sm:pb-28">
+        <div className="border-t border-[#e5dfd5] pt-8 sm:pt-10">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#8a8176]">
+                Remembered with love
+              </p>
 
-            <h1 className="max-w-2xl text-5xl font-medium leading-[1.05] tracking-tight md:text-7xl">
-              Keep their memory close, forever.
-            </h1>
+              <h2 className="mt-3 font-serif text-3xl font-medium sm:text-4xl">
+                Memorials
+              </h2>
+            </div>
 
-            <p className="mt-7 max-w-xl text-lg leading-8 text-[#66625c]">
-              Create a beautiful memorial for a pet you love, share their
-              story, keep their memories together, and give others a place
-              to remember them.
-            </p>
+            <span className="pb-1 text-sm text-[#8a8176]">
+              {isLoaded ? memorials.length : "…"}
+            </span>
+          </div>
 
-            <div className="mt-9 flex flex-wrap gap-4">
-
-              <a
-                href="/create"
-                className="rounded-full bg-[#242321] px-7 py-3.5 text-sm text-white"
+          {!isLoaded ? (
+            <div className="py-20 text-center text-sm text-[#716b63]">
+              Opening our memorial garden…
+            </div>
+          ) : memorials.length === 0 ? (
+            <div className="mt-8 rounded-3xl border border-[#e5dfd5] bg-white/60 px-6 py-14 text-center sm:mt-10 sm:py-20">
+              <div
+                className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#eee8de] font-serif text-2xl text-[#716b63]"
+                aria-hidden="true"
               >
-                Create a memorial
-              </a>
+                ♡
+              </div>
 
-              <button className="rounded-full border border-[#bdb8af] px-7 py-3.5 text-sm">
-                Explore memorials
-              </button>
-            </div>
-          </div>
-
-          <div className="overflow-hidden rounded-[2rem]">
-            <img
-              src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=1200&q=85"
-              alt="Pet"
-              className="h-[500px] w-full object-cover"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section
-        id="how-it-works"
-        className="border-y border-[#ded9d0] bg-[#eeebe5]"
-      >
-        <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
-          <div className="max-w-2xl">
-            <p className="text-sm uppercase tracking-[0.25em] text-[#77736d]">
-              How it works
-            </p>
-
-            <h2 className="mt-4 text-4xl font-medium tracking-tight md:text-5xl">
-              A simple place for their story to live on.
-            </h2>
-          </div>
-
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
-            <div className="rounded-3xl bg-[#f7f4ef] p-8">
-              <span className="text-sm text-[#8a857d]">01</span>
-
-              <h3 className="mt-8 text-2xl font-medium">
-                Create their memorial
+              <h3 className="mt-6 font-serif text-2xl font-medium sm:text-3xl">
+                Every memorial begins with a story.
               </h3>
 
-              <p className="mt-4 leading-7 text-[#66625c]">
-                Add their name, dates, story, photos, videos, and the memories
-                that made them special.
+              <p className="mx-auto mt-3 max-w-md text-sm leading-7 text-[#716b63] sm:text-base">
+                This garden is waiting for its first tribute.
+                Create a memorial to give a beloved pet's
+                story a place to live on.
               </p>
+
+              <Link
+                href="/create"
+                className="mt-7 inline-flex min-h-11 items-center justify-center rounded-full border border-[#cfc7bb] px-6 py-3 text-sm font-medium transition hover:bg-[#f1ece4]"
+              >
+                Create the first memorial
+              </Link>
             </div>
+          ) : (
+            <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+              {memorials.map((memorial) => (
+                <Link
+                  key={memorial.slug}
+                  href={`/memorial/${encodeURIComponent(memorial.slug)}`}
+                  className="group rounded-3xl border border-[#e5dfd5] bg-white/70 p-6 transition hover:-translate-y-1 hover:bg-white hover:shadow-sm"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#eee8de] font-serif text-xl text-[#716b63]">
+                    {memorial.petName.trim().charAt(0).toUpperCase()}
+                  </div>
 
-            <div className="rounded-3xl bg-[#f7f4ef] p-8">
-              <span className="text-sm text-[#8a857d]">02</span>
+                  <p className="mt-5 text-xs uppercase tracking-[0.18em] text-[#8a8176]">
+                    {memorial.petType || "Beloved pet"}
+                  </p>
 
-              <h3 className="mt-8 text-2xl font-medium">
-                Share their profile
-              </h3>
+                  <h3 className="mt-2 font-serif text-2xl font-medium group-hover:underline">
+                    {memorial.petName}
+                  </h3>
 
-              <p className="mt-4 leading-7 text-[#66625c]">
-                Give family and friends a simple link where they can visit,
-                remember, and share their thoughts.
-              </p>
+                  {(memorial.birthDate || memorial.passingDate) && (
+                    <p className="mt-2 text-sm text-[#8a8176]">
+                      {memorial.birthDate || " "}
+                      {memorial.birthDate && memorial.passingDate ? " — " : ""}
+                      {memorial.passingDate || ""}
+                    </p>
+                  )}
+
+                  {memorial.story && (
+                    <p className="mt-4 line-clamp-3 text-sm leading-7 text-[#716b63]">
+                      {memorial.story}
+                    </p>
+                  )}
+
+                  <p className="mt-6 text-sm font-medium text-[#454139]">
+                    Visit memorial →
+                  </p>
+                </Link>
+              ))}
             </div>
-
-            <div className="rounded-3xl bg-[#f7f4ef] p-8">
-              <span className="text-sm text-[#8a857d]">03</span>
-
-              <h3 className="mt-8 text-2xl font-medium">
-                Keep remembering
-              </h3>
-
-              <p className="mt-4 leading-7 text-[#66625c]">
-                Their memorial can continue to grow with stories, photographs,
-                messages, and flowers from the people who remember them.
-              </p>
-            </div>
-          </div>
+          )}
         </div>
-      </section>
-
-      {/* Explore preview */}
-      <section id="explore" className="mx-auto max-w-7xl px-6 py-20 md:py-28">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <div>
-            <p className="text-sm uppercase tracking-[0.25em] text-[#77736d]">
-              Explore
-            </p>
-
-            <h2 className="mt-4 text-4xl font-medium tracking-tight md:text-5xl">
-              Discover stories worth remembering.
-            </h2>
-          </div>
-
-          <button className="w-fit rounded-full border border-[#bdb8af] px-6 py-3 text-sm">
-            Explore all
-          </button>
-        </div>
-
-        <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4">
-          <div className="overflow-hidden rounded-3xl">
-            <img
-              src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=800&q=80"
-              alt="Memorial pet"
-              className="aspect-square w-full object-cover"
-            />
-          </div>
-
-          <div className="overflow-hidden rounded-3xl">
-            <img
-              src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=800&q=80"
-              alt="Memorial pet"
-              className="aspect-square w-full object-cover"
-            />
-          </div>
-
-          <div className="overflow-hidden rounded-3xl">
-            <img
-              src="https://images.unsplash.com/photo-1570824104453-508955ab713e?w=800&q=80"
-              alt="Memorial pet"
-              className="aspect-square w-full object-cover"
-            />
-          </div>
-
-          <div className="overflow-hidden rounded-3xl">
-            <img
-              src="https://images.unsplash.com/photo-1535241749838-299277b6305f?w=800&q=80"
-              alt="Memorial pet"
-              className="aspect-square w-full object-cover"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Plans */}
-      <section
-        id="plans"
-        className="border-y border-[#ded9d0] bg-[#eeebe5]"
-      >
-        <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
-          <div className="max-w-2xl">
-            <p className="text-sm uppercase tracking-[0.25em] text-[#77736d]">
-              Memorial plans
-            </p>
-
-            <h2 className="mt-4 text-4xl font-medium tracking-tight md:text-5xl">
-              Choose how you want to remember them.
-            </h2>
-
-            <p className="mt-5 leading-7 text-[#66625c]">
-              Placeholder plans for now. Pricing and exact features will be
-              decided later.
-            </p>
-          </div>
-
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
-            <div className="rounded-3xl bg-[#f7f4ef] p-8">
-              <p className="text-sm text-[#77736d]">Basic</p>
-              <h3 className="mt-3 text-3xl font-medium">Free</h3>
-
-              <p className="mt-5 leading-7 text-[#66625c]">
-                A simple starting place for creating a memorial.
-              </p>
-
-              <button className="mt-8 w-full rounded-full border border-[#bdb8af] px-5 py-3 text-sm">
-                Get started
-              </button>
-            </div>
-
-            <div className="rounded-3xl bg-[#f7f4ef] p-8">
-              <p className="text-sm text-[#77736d]">Standard</p>
-              <h3 className="mt-3 text-3xl font-medium">Coming soon</h3>
-
-              <p className="mt-5 leading-7 text-[#66625c]">
-                More features for creating and maintaining their memorial.
-              </p>
-
-              <button className="mt-8 w-full rounded-full bg-[#242321] px-5 py-3 text-sm text-white">
-                Learn more
-              </button>
-            </div>
-
-            <div className="rounded-3xl bg-[#f7f4ef] p-8">
-              <p className="text-sm text-[#77736d]">Pro</p>
-              <h3 className="mt-3 text-3xl font-medium">Lifetime</h3>
-
-              <p className="mt-5 leading-7 text-[#66625c]">
-                A lifetime memorial with features we will define later.
-              </p>
-
-              <button className="mt-8 w-full rounded-full border border-[#bdb8af] px-5 py-3 text-sm">
-                Learn more
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="mx-auto max-w-4xl px-6 py-24 text-center md:py-32">
-        <h2 className="text-4xl font-medium tracking-tight md:text-6xl">
-          Give their memory a place to live on.
-        </h2>
-
-        <p className="mx-auto mt-6 max-w-2xl leading-7 text-[#66625c]">
-          Create a Petsive memorial and share their story with the people who
-          will always remember them.
-        </p>
-
-        <button className="mt-8 rounded-full bg-[#242321] px-7 py-3.5 text-sm text-white">
-          Create a memorial
-        </button>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-[#ded9d0]">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 px-6 py-8 text-sm text-[#77736d] md:flex-row">
-          <span>Petsive</span>
-          <span>A place to remember them.</span>
+      <footer className="border-t border-[#e5dfd5]">
+        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-8 text-sm text-[#8a8176] sm:flex-row sm:items-center sm:justify-between sm:px-8">
+          <Link href="/" className="font-serif text-xl font-semibold text-[#454139]">
+            Petsive
+          </Link>
+
+          <p>A place to remember them.</p>
         </div>
       </footer>
+
     </main>
   )
 }
