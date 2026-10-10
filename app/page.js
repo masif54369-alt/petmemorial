@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] text-[#242321]">
       {/* Navigation */}
-      <header className="border-b border-[#ded9d0] bg-[#f7f4ef]">
+      <header className="sticky top-0 z-50 border-b border-[#ded9d0] bg-[#f7f4ef]">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
           <div className="text-2xl font-semibold tracking-tight">
             Petsive
