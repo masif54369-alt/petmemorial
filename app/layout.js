@@ -1,3 +1,4 @@
+import Navigation from '../components/Navigation'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
 import './globals.css'
 
@@ -26,7 +27,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Navigation />
+        {children}
+      </body>
     </html>
   )
 }

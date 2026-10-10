@@ -3,40 +3,19 @@
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#f7f4ef] text-[#242321]">
-      {/* Navigation */}
-      <header className="sticky top-0 z-50 border-b border-[#ded9d0] bg-[#f7f4ef]">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <div className="text-2xl font-semibold tracking-tight">
-            Petsive
-          </div>
 
-          <nav className="hidden items-center gap-8 text-sm md:flex">
-            <a href="#how-it-works" className="hover:opacity-60">
-              How it works
-            </a>
-            <a href="#explore" className="hover:opacity-60">
-              Explore
-            </a>
-            <a href="#plans" className="hover:opacity-60">
-              Plans
-            </a>
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <button className="hidden text-sm md:block">
-              Sign in
-            </button>
+      {/* Mobile community feed header */}
 
 
-            <a
-              href="/create"
-              className="rounded-full bg-[#242321] px-5 py-2.5 text-sm text-white"
-            >
-              Create memorial
-            </a>
-          </div>
-        </div>
-      </header>
+      {/* Compact mobile sticky header */}
+      <section className="sticky top-0 z-40 bg-[#FBF8F3] px-5 py-3 md:hidden">
+        <a
+          href="/"
+          className="font-serif text-3xl font-semibold tracking-tight text-[#242321]"
+        >
+          Petsive
+        </a>
+      </section>
 
       {/* Hero */}
       <section className="mx-auto max-w-7xl px-6 py-16 md:py-24">

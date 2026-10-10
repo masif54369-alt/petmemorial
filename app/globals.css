@@ -283,3 +283,126 @@ textarea {
   padding: 2.5rem;
   animation: fadeUp 0.35s ease forwards;
 }
+
+
+/* Petsive shared navigation */
+
+.petsive-desktop-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #fbf8f3;
+  border-bottom: 1px solid #ded9d0;
+}
+
+.petsive-nav-inner {
+  width: 100%;
+  max-width: 1280px;
+  min-height: 76px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.petsive-brand {
+  color: #242321;
+  font-family: var(--font-cormorant);
+  font-size: 32px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.petsive-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.petsive-nav-link {
+  color: #68645e;
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.petsive-nav-link:hover,
+.petsive-nav-link.is-active {
+  color: #242321;
+}
+
+.petsive-nav-link.is-active {
+  font-weight: 600;
+}
+
+.petsive-create-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: #242321;
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.petsive-create-link:hover {
+  background: #45423d;
+}
+
+.petsive-mobile-nav {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .petsive-desktop-nav {
+    display: none;
+  }
+
+  .petsive-mobile-nav {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 68px;
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+    background: #fbf8f3;
+    border-top: 1px solid #ded9d0;
+  }
+
+  .petsive-mobile-link {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-height: 48px;
+    color: #77716a;
+    font-size: 11px;
+    text-decoration: none;
+  }
+
+  .petsive-mobile-link.is-active {
+    color: #242321;
+    font-weight: 600;
+  }
+
+  .petsive-mobile-icon {
+    font-size: 23px;
+    line-height: 1;
+  }
+
+  body {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+}
