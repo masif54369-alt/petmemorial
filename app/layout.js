@@ -1,3 +1,4 @@
+import Link from "next/link"
 import Navigation from '../components/Navigation'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
 import './globals.css'
@@ -28,7 +29,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${cormorant.variable} ${inter.variable}`}>
       <body>
-        <Navigation />
+        <header className="sticky top-0 z-50 border-b border-[#e5dfd5] bg-[#fbf8f3]/95 px-5 py-3 backdrop-blur-sm">
+          <div className="mx-auto max-w-6xl">
+            <Link
+              href="/"
+              className="font-serif text-2xl font-semibold tracking-tight text-[#454139]"
+            >
+              Petsive
+            </Link>
+          </div>
+        </header>
         {children}
       </body>
     </html>
